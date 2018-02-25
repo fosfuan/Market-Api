@@ -282,3 +282,6 @@ pub/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+	
+Market.API/CryptoMaket/CryptoMaket/Logs/*
