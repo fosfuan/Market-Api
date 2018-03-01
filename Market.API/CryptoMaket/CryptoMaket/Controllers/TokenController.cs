@@ -6,6 +6,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CryptoMaket.Models;
+using Market.DAL;
+using Market.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +20,14 @@ namespace CryptoMaket.Controllers
     [Route("api/Token")]
     public class TokenController : Controller
     {
-        private IConfiguration _config;
+        private IConfiguration config;
+        private readonly IUserService userService;
 
-        public TokenController(IConfiguration config)
+        public TokenController(IConfiguration config,
+            IUserService userService)
         {
-            _config = config;
+            this.config = config;
+            this.userService = userService;
         }
 
         [AllowAnonymous]
@@ -41,6 +46,36 @@ namespace CryptoMaket.Controllers
             return response;
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Registration([FromBody] RegisterModel register)
+        {
+            IActionResult response = BadRequest();
+            try
+            {
+                User user = new User()
+                {
+                    Email = register.Email,
+                    Password = register.Password,
+                    UserName = register.UserName
+                };
+                var isAdded = await this.userService.AddUserAsync(user);
+                if (isAdded)
+                {
+                    response = Ok(new { message = "User registerd!" });
+                    return response;
+                }
+                else
+                {
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         private string BuildToken(UserModel user)
         {
             var claims = new[] {
@@ -51,11 +86,11 @@ namespace CryptoMaket.Controllers
                 new Claim(ClaimTypes.DateOfBirth, "2017-06-08", ClaimValueTypes.Date)
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Issuer"],
+            var token = new JwtSecurityToken(this.config["Jwt:Issuer"],
+              this.config["Jwt:Issuer"],
               claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: creds);

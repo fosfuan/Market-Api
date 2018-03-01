@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoMaket", "CryptoMaket\CryptoMaket.csproj", "{60A7346E-9504-4056-8755-B9D573933C1F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.DAL", "Market.DAL\Market.DAL.csproj", "{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Services", "Market.Services\Market.Services.csproj", "{D570525A-EE91-4468-A2EF-45FCE8641440}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Helper", "Market.Helper\Market.Helper.csproj", "{08C15945-66B8-4DF6-8CEF-5D09375949B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{60A7346E-9504-4056-8755-B9D573933C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60A7346E-9504-4056-8755-B9D573933C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60A7346E-9504-4056-8755-B9D573933C1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D570525A-EE91-4468-A2EF-45FCE8641440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D570525A-EE91-4468-A2EF-45FCE8641440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D570525A-EE91-4468-A2EF-45FCE8641440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D570525A-EE91-4468-A2EF-45FCE8641440}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
