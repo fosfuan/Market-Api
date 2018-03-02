@@ -23,19 +23,25 @@ namespace Market.DAL.Repositories
             int insertedId = 0;
 
             string hashedPassword = Security.HashSHA1(user.Password + userGuid.ToString());
-
-            using (SqlConnection cn = new SqlConnection(this.ConnectionString))
-            using (SqlCommand cmd = new SqlCommand(UserQueries.InsertUser(), cn))
+            try
             {
-                cmd.Parameters.Add("@Email", SqlDbType.VarChar, 250).Value = user.Email;
-                cmd.Parameters.Add("@Password", SqlDbType.VarChar, 250).Value = hashedPassword;
-                cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = user.UserName;
-                cmd.Parameters.Add("@UserGuid", SqlDbType.UniqueIdentifier).Value = user.UserGuid;
+                using (SqlConnection cn = new SqlConnection(this.ConnectionString))
+                using (SqlCommand cmd = new SqlCommand(UserQueries.InsertUser(), cn))
+                {
+                    cmd.Parameters.Add("@Email", SqlDbType.VarChar, 250).Value = user.Email;
+                    cmd.Parameters.Add("@Password", SqlDbType.VarChar, 250).Value = hashedPassword;
+                    cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = user.UserName;
+                    cmd.Parameters.Add("@UserGuid", SqlDbType.UniqueIdentifier).Value = user.UserGuid;
 
-                cn.Open();
-                insertedId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-                //await cmd.ExecuteNonQueryAsync();
-                if(cn.State == System.Data.ConnectionState.Open) cn.Close();
+                    cn.Open();
+                    insertedId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                    //await cmd.ExecuteNonQueryAsync();
+                    if (cn.State == System.Data.ConnectionState.Open) cn.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             return insertedId;
@@ -44,24 +50,30 @@ namespace Market.DAL.Repositories
         public async Task<bool> CheckIfEmailExists(string email)
         {
             bool userExists = false;
-
-            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            try
             {
-                SqlCommand cmd = new SqlCommand(UserQueries.CountUserByEmail(), con);
-                cmd.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
-                await con.OpenAsync();
-
-                SqlDataReader reader = await cmd.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
+                using (SqlConnection con = new SqlConnection(this.ConnectionString))
                 {
-                    int numberOfUsers;
-                    GetNumberOfUsers(out numberOfUsers, reader);
-                    if(numberOfUsers > 0)
+                    SqlCommand cmd = new SqlCommand(UserQueries.CountUserByEmail(), con);
+                    cmd.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
+                    await con.OpenAsync();
+
+                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
                     {
-                        userExists = true;
+                        int numberOfUsers;
+                        GetNumberOfUsers(out numberOfUsers, reader);
+                        if (numberOfUsers > 0)
+                        {
+                            userExists = true;
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             return userExists;
@@ -76,24 +88,30 @@ namespace Market.DAL.Repositories
         public async Task<bool> CheckIfUsernameExists(string username)
         {
             bool userExists = false;
-
-            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            try
             {
-                SqlCommand cmd = new SqlCommand(UserQueries.CountUserByUserName(), con);
-                cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = username;
-                await con.OpenAsync();
-
-                SqlDataReader reader = await cmd.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
+                using (SqlConnection con = new SqlConnection(this.ConnectionString))
                 {
-                    int numberOfUsers;
-                    GetNumberOfUsers(out numberOfUsers, reader);
-                    if (numberOfUsers > 0)
+                    SqlCommand cmd = new SqlCommand(UserQueries.CountUserByUserName(), con);
+                    cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = username;
+                    await con.OpenAsync();
+
+                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
                     {
-                        userExists = true;
+                        int numberOfUsers;
+                        GetNumberOfUsers(out numberOfUsers, reader);
+                        if (numberOfUsers > 0)
+                        {
+                            userExists = true;
+                        }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             return userExists;
@@ -107,35 +125,41 @@ namespace Market.DAL.Repositories
         public async Task<User> GetUserByUsernamePassword(string userName, string password)
         {
             var searchedUser = new User();
-            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            try
             {
-                SqlCommand cmd = new SqlCommand(UserQueries.SelectUserByUserName(), con);
-                cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = userName;
-
-                await con.OpenAsync();
-                SqlDataReader rdr = await cmd.ExecuteReaderAsync();
-
-                while (await rdr.ReadAsync())
+                using (SqlConnection con = new SqlConnection(this.ConnectionString))
                 {
-                    User user = new User();
-                    Guid userGuid;
-                    Guid.TryParse(rdr["UserGuid"].ToString(), out userGuid);
+                    SqlCommand cmd = new SqlCommand(UserQueries.SelectUserByUserName(), con);
+                    cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = userName;
 
-                    var userPassword = rdr["Password"].ToString();
-                    string hashedPassword = Security.HashSHA1(password + userGuid);
+                    await con.OpenAsync();
+                    SqlDataReader rdr = await cmd.ExecuteReaderAsync();
 
-                    if (string.Equals(hashedPassword, userPassword))
+                    while (await rdr.ReadAsync())
                     {
-                        user.UserName = rdr["UserName"].ToString();
-                        user.Email = rdr["Email"].ToString();
-                        user.Id = Convert.ToInt32(rdr["Id"]);
-                        user.UserGuid = userGuid;
-                        searchedUser = user;
-                    }
-                }
-                con.Close();
-            }
+                        User user = new User();
+                        Guid userGuid;
+                        Guid.TryParse(rdr["UserGuid"].ToString(), out userGuid);
 
+                        var userPassword = rdr["Password"].ToString();
+                        string hashedPassword = Security.HashSHA1(password + userGuid);
+
+                        if (string.Equals(hashedPassword, userPassword))
+                        {
+                            user.UserName = rdr["UserName"].ToString();
+                            user.Email = rdr["Email"].ToString();
+                            user.Id = Convert.ToInt32(rdr["Id"]);
+                            user.UserGuid = userGuid;
+                            searchedUser = user;
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             return searchedUser;
         }
 

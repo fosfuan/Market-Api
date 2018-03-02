@@ -43,19 +43,26 @@ namespace Market.DAL.Repositories
         public async Task<List<string>> GetUserRoles(int userId)
         {
             List<string> userRoles = new List<string>();
-            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            try
             {
-                SqlCommand cmd = new SqlCommand(UserRolesQueries.SelectUserRoleByUserId(), con);
-                cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
-                await con.OpenAsync();
-
-                SqlDataReader reader = await cmd.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
+                using (SqlConnection con = new SqlConnection(this.ConnectionString))
                 {
-                    string role = reader["RoleName"].ToString();
-                    userRoles.Add(role);                    
+                    SqlCommand cmd = new SqlCommand(UserRolesQueries.SelectUserRoleByUserId(), con);
+                    cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
+                    await con.OpenAsync();
+
+                    SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string role = reader["RoleName"].ToString();
+                        userRoles.Add(role);
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             return userRoles;
