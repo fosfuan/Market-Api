@@ -6,14 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Market.DAL.Queries;
 using Market.Helper;
+using Microsoft.Extensions.Configuration;
 
 namespace Market.DAL.Repositories
 {
     public class UserRoleRepository : BaseRepository, IUserRoleRepository
     {
-        public UserRoleRepository(string connectionString) : base(connectionString)
+        private readonly IConfiguration config;
+
+        public UserRoleRepository(IConfiguration config) : base(config.GetConnectionString("DefaultConnection"))
         {
+
         }
+
 
         public async Task<bool> AddUserRole(int userId, string role)
         {

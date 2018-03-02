@@ -1,5 +1,6 @@
 ﻿using Market.DAL.Queries;
 using Market.Helper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +12,9 @@ namespace Market.DAL.Repositories
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-        public UserRepository(string connectionString) : base(connectionString)
+        private readonly IConfiguration config;
+
+        public UserRepository(IConfiguration config) : base(config.GetConnectionString("DefaultConnection"))
         {
 
         }

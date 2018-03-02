@@ -21,15 +21,8 @@ namespace CryptoMaket.Extensions
 
         public static void Resolve(IServiceCollection services, IConfiguration configration)
         {
-            services.AddTransient<IUserRepository, UserRepository>(serviceProvider =>
-            {
-                return new UserRepository(configration.GetConnectionString("DefaultConnection"));
-            });
-
-            services.AddTransient<IUserRoleRepository, UserRoleRepository>(serviceProvider =>
-            {
-                return new UserRoleRepository(configration.GetConnectionString("DefaultConnection"));
-            });
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
 
             services.AddTransient<IUserRolesService, UserRolesService>();
             services.AddTransient<IUserService, UserService>();

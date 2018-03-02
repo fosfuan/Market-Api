@@ -41,7 +41,7 @@ namespace CryptoMaket.Controllers
             IActionResult response = Unauthorized();
             var user = await Authenticate(login);
 
-            if (user != null)
+            if (user.UserName != null)
             {
                 var tokenString = await BuildToken(user);
                 response = Ok(new { token = tokenString });
