@@ -22,25 +22,33 @@ namespace CryptoMaket.Controllers
     {
         private IConfiguration config;
         private readonly IUserService userService;
+        private readonly IUserRolesService userRolesService;
 
         public TokenController(IConfiguration config,
-            IUserService userService)
+            IUserService userService,
+            IUserRolesService userRolesService)
         {
             this.config = config;
             this.userService = userService;
+            this.userRolesService = userRolesService;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult CreateToken([FromBody]LoginModel login)
+        [HttpPost("login")]
+        public async Task<IActionResult> CreateToken([FromBody]LoginModel login)
         {
             IActionResult response = Unauthorized();
-            var user = Authenticate(login);
+            var user = await Authenticate(login);
 
             if (user != null)
             {
-                var tokenString = BuildToken(user);
+                var tokenString = await BuildToken(user);
                 response = Ok(new { token = tokenString });
+            }
+            else
+            {
+                response = BadRequest(new { error = "Invalid UserName or Password!" });
             }
 
             return response;
@@ -67,13 +75,13 @@ namespace CryptoMaket.Controllers
                     return BadRequest(new { message = "UserName already exists;" });
                 }
 
-                User user = new User()
+                User newUser = new User()
                 {
                     Email = register.Email,
                     Password = register.Password,
                     UserName = register.UserName
                 };
-                await this.userService.AddUserAsync(user);
+                await this.userService.AddUserAsync(newUser);
                 response = Ok(new { message = "User registerd!" });
                 return response;
             }
@@ -83,15 +91,21 @@ namespace CryptoMaket.Controllers
             }
         }
 
-        private string BuildToken(UserModel user)
+        private async Task<string> BuildToken(User user)
         {
-            var claims = new[] {
+            var userRoles = await this.userRolesService.GetUserRoles(user.Id);
+
+            var claims = new List<Claim>() {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, "Test", ClaimValueTypes.String),
-                new Claim(ClaimTypes.DateOfBirth, "2017-06-08", ClaimValueTypes.Date)
-        };
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(
+                    new Claim(ClaimTypes.Role, userRole));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -105,14 +119,10 @@ namespace CryptoMaket.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private UserModel Authenticate(LoginModel login)
+        private async Task<User> Authenticate(LoginModel login)
         {
-            UserModel user = null;
-
-            if (login.Email == "wojtek" && login.Password == "secret")
-            {
-                user = new UserModel { UserName = "Wojtek Krawiec", Email = "wojtek.krawiec@domain.com" };
-            }
+            User user = await this.userService.GetUserByUsernameAndPassword(login.UserName, login.Password);
+            
             return user;
         }
 

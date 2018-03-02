@@ -30,6 +30,8 @@ namespace CryptoMaket.Extensions
             {
                 return new UserRoleRepository(configration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddTransient<IUserRolesService, UserRolesService>();
             services.AddTransient<IUserService, UserService>();
         }
     }

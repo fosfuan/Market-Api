@@ -118,17 +118,18 @@ namespace Market.DAL.Repositories
                 while (await rdr.ReadAsync())
                 {
                     User user = new User();
-                    user.Email = rdr["Email"].ToString();
-                    user.Id = Convert.ToInt32(rdr["Id"]);
                     Guid userGuid;
                     Guid.TryParse(rdr["UserGuid"].ToString(), out userGuid);
 
-                    user.UserName = rdr["UserName"].ToString();
                     var userPassword = rdr["Password"].ToString();
+                    string hashedPassword = Security.HashSHA1(password + userGuid);
 
-                    string hashedPassword = Security.HashSHA1(userPassword + userGuid);
-                    if (string.Equals(hashedPassword, user.Password))
+                    if (string.Equals(hashedPassword, userPassword))
                     {
+                        user.UserName = rdr["UserName"].ToString();
+                        user.Email = rdr["Email"].ToString();
+                        user.Id = Convert.ToInt32(rdr["Id"]);
+                        user.UserGuid = userGuid;
                         searchedUser = user;
                     }
                 }

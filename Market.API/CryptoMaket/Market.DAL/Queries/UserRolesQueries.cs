@@ -10,5 +10,10 @@ namespace Market.DAL.Queries
         {
             return $"INSERT INTO [dbo].[UserRoles] (UserId, RoleName) VALUES(@UserId, @RoleName)";
         }
+
+        public static string SelectUserRoleByUserId()
+        {
+            return $"SELECT RoleName FROM [dbo].[UserRoles] WHERE UserId = @UserId";
+        }
     }
 }

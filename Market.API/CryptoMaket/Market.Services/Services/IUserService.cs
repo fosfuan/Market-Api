@@ -9,7 +9,7 @@ namespace Market.Services.Services
     public interface IUserService
     {
         Task<bool> AddUserAsync(User user);
-        Task<User> GetUserByUsernameAndPassword(User user);
+        Task<User> GetUserByUsernameAndPassword(string userName, string password);
         Task<bool> UpdateUser(User user);
         Task<bool> DeleteUser(User user);
         Task<bool> CheckIfUsernameExists(string username);

@@ -39,5 +39,26 @@ namespace Market.DAL.Repositories
 
             return isAddedUserRole;
         }
+
+        public async Task<List<string>> GetUserRoles(int userId)
+        {
+            List<string> userRoles = new List<string>();
+            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(UserRolesQueries.SelectUserRoleByUserId(), con);
+                cmd.Parameters.Add("@UserId", SqlDbType.Int).Value = userId;
+                await con.OpenAsync();
+
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    string role = reader["RoleName"].ToString();
+                    userRoles.Add(role);                    
+                }
+            }
+
+            return userRoles;
+        }
     }
 }

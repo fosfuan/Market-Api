@@ -1,12 +1,11 @@
-﻿using Market.Helper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Market.DAL.Repositories
+namespace Market.Services.Services
 {
-    public interface IUserRoleRepository
+    public interface IUserRolesService
     {
         Task<bool> AddUserRole(int userId, string role);
         Task<List<string>> GetUserRoles(int userId);

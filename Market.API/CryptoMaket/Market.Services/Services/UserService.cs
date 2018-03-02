@@ -43,9 +43,9 @@ namespace Market.Services.Services
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetUserByUsernameAndPassword(User user)
+        public async Task<User> GetUserByUsernameAndPassword(string userName, string password)
         {
-            return await this.userRepository.GetUserByUsernamePassword(user.UserName, user.Password);
+            return await this.userRepository.GetUserByUsernamePassword(userName, password);
         }
 
         public Task<bool> UpdateUser(User user)
