@@ -21,6 +21,16 @@ namespace Market.Services.Services
             return await this.userRepository.AddUserAsync(user);
         }
 
+        public async Task<bool> CheckIfEmailExists(string email)
+        {
+            return await this.userRepository.CheckIfEmailExists(email);
+        }
+
+        public async Task<bool> CheckIfUsernameExists(string username)
+        {
+            return await this.userRepository.CheckIfUsernameExists(username);
+        }
+
         public Task<bool> DeleteUser(User user)
         {
             throw new NotImplementedException();

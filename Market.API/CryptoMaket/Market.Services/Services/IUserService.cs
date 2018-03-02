@@ -12,5 +12,7 @@ namespace Market.Services.Services
         Task<User> GetUserByUsernameAndPassword(User user);
         Task<bool> UpdateUser(User user);
         Task<bool> DeleteUser(User user);
+        Task<bool> CheckIfUsernameExists(string username);
+        Task<bool> CheckIfEmailExists(string email);
     }
 }

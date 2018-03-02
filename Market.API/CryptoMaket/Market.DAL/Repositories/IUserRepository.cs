@@ -11,5 +11,7 @@ namespace Market.DAL.Repositories
         Task<User> GetUserByUsernamePassword(string userName, string password);
         Task<bool> UpdateUser(User user);
         Task<bool> DeleteUser(User user);
+        Task<bool> CheckIfUsernameExists(string username);
+        Task<bool> CheckIfEmailExists(string email);
     }
 }

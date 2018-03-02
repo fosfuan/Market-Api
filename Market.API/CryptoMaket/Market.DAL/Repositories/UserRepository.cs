@@ -20,7 +20,7 @@ namespace Market.DAL.Repositories
         {
             Guid userGuid = System.Guid.NewGuid();
             user.UserGuid = userGuid;
-            
+
             string hashedPassword = Security.HashSHA1(user.Password + userGuid.ToString());
 
             using (SqlConnection cn = new SqlConnection(this.ConnectionString))
@@ -39,6 +39,64 @@ namespace Market.DAL.Repositories
             return true;
         }
 
+        public async Task<bool> CheckIfEmailExists(string email)
+        {
+            bool userExists = false;
+
+            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(UserQueries.CountUserByEmail(), con);
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = email;
+                await con.OpenAsync();
+
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    int numberOfUsers;
+                    GetNumberOfUsers(out numberOfUsers, reader);
+                    if(numberOfUsers > 0)
+                    {
+                        userExists = true;
+                    }
+                }
+            }
+
+            return userExists;
+        }
+
+        private void GetNumberOfUsers(out int numberOfUsers, SqlDataReader reader)
+        {
+            numberOfUsers = Convert.ToInt32(reader["NumberOfUsers"]);
+        }
+
+
+        public async Task<bool> CheckIfUsernameExists(string username)
+        {
+            bool userExists = false;
+
+            using (SqlConnection con = new SqlConnection(this.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(UserQueries.CountUserByUserName(), con);
+                cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = username;
+                await con.OpenAsync();
+
+                SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    int numberOfUsers;
+                    GetNumberOfUsers(out numberOfUsers, reader);
+                    if (numberOfUsers > 0)
+                    {
+                        userExists = true;
+                    }
+                }
+            }
+
+            return userExists;
+        }
+
         public Task<bool> DeleteUser(User user)
         {
             throw new NotImplementedException();
@@ -52,7 +110,7 @@ namespace Market.DAL.Repositories
                 SqlCommand cmd = new SqlCommand(UserQueries.SelectUserByUserName(), con);
                 cmd.Parameters.Add("@UserName", SqlDbType.VarChar, 50).Value = userName;
 
-                con.Open();
+                await con.OpenAsync();
                 SqlDataReader rdr = await cmd.ExecuteReaderAsync();
 
                 while (await rdr.ReadAsync())
@@ -67,7 +125,7 @@ namespace Market.DAL.Repositories
                     var userPassword = rdr["Password"].ToString();
 
                     string hashedPassword = Security.HashSHA1(userPassword + userGuid);
-                    if(string.Equals(hashedPassword, user.Password))
+                    if (string.Equals(hashedPassword, user.Password))
                     {
                         searchedUser = user;
                     }
@@ -77,6 +135,8 @@ namespace Market.DAL.Repositories
 
             return searchedUser;
         }
+
+
 
         public Task<bool> UpdateUser(User user)
         {

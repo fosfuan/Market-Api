@@ -50,29 +50,36 @@ namespace CryptoMaket.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Registration([FromBody] RegisterModel register)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             IActionResult response = BadRequest();
             try
             {
+                if(await this.userService.CheckIfEmailExists(register.Email))
+                {
+                    return BadRequest(new { message = "Email already exists;"});
+                }
+
+                if (await this.userService.CheckIfUsernameExists(register.UserName))
+                {
+                    return BadRequest(new { message = "UserName already exists;" });
+                }
+
                 User user = new User()
                 {
                     Email = register.Email,
                     Password = register.Password,
                     UserName = register.UserName
                 };
-                var isAdded = await this.userService.AddUserAsync(user);
-                if (isAdded)
-                {
-                    response = Ok(new { message = "User registerd!" });
-                    return response;
-                }
-                else
-                {
-                    return response;
-                }
+                await this.userService.AddUserAsync(user);
+                response = Ok(new { message = "User registerd!" });
+                return response;
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest( ex.Message );
             }
         }
 
