@@ -28,7 +28,7 @@ namespace Market.DAL.Queries
 
         public static string InsertUser()
         {
-            return $"INSERT INTO [dbo].[User] (Email, Password, UserName, UserGuid) VALUES(@Email, @Password, @UserName, @UserGuid)";
+            return $"INSERT INTO [dbo].[User] (Email, Password, UserName, UserGuid) VALUES(@Email, @Password, @UserName, @UserGuid); SELECT SCOPE_IDENTITY();";
         }
 
     }

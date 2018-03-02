@@ -15,8 +15,8 @@ namespace CryptoMaket.Extensions
     {
         public static void Resolve(TinyIoCContainer container, IConfiguration configuration)
         {
-            container.Register<IUserRepository>(new UserRepository(configuration.GetConnectionString("DefaultConnection")));
-            container.Register<IUserService>(new UserService(container.Resolve<IUserRepository>()));
+            //container.Register<IUserRepository>(new UserRepository(configuration.GetConnectionString("DefaultConnection")));
+            //container.Register<IUserService>(new UserService(container.Resolve<IUserRepository>()));
         }
 
         public static void Resolve(IServiceCollection services, IConfiguration configration)
@@ -24,6 +24,11 @@ namespace CryptoMaket.Extensions
             services.AddTransient<IUserRepository, UserRepository>(serviceProvider =>
             {
                 return new UserRepository(configration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>(serviceProvider =>
+            {
+                return new UserRoleRepository(configration.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<IUserService, UserService>();
         }

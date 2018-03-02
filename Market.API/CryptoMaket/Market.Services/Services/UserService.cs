@@ -4,21 +4,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Market.DAL;
 using Market.DAL.Repositories;
+using Market.Helper;
 
 namespace Market.Services.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IUserRoleRepository userRoleRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository,
+            IUserRoleRepository userRoleRepository)
         {
+            this.userRoleRepository = userRoleRepository;
             this.userRepository = userRepository;
         }
 
         public async Task<bool> AddUserAsync(User user)
         {
-            return await this.userRepository.AddUserAsync(user);
+            var insertedUserId =  await this.userRepository.AddUserAsync(user);
+            var isRoleAssignedToNewUser = await this.userRoleRepository.AddUserRole(insertedUserId, RoleType.BasicUser);
+
+            return isRoleAssignedToNewUser;
         }
 
         public async Task<bool> CheckIfEmailExists(string email)

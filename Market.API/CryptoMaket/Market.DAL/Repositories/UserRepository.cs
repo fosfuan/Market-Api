@@ -16,10 +16,11 @@ namespace Market.DAL.Repositories
 
         }
 
-        public async Task<bool> AddUserAsync(User user)
+        public async Task<int> AddUserAsync(User user)
         {
             Guid userGuid = System.Guid.NewGuid();
             user.UserGuid = userGuid;
+            int insertedId = 0;
 
             string hashedPassword = Security.HashSHA1(user.Password + userGuid.ToString());
 
@@ -32,11 +33,12 @@ namespace Market.DAL.Repositories
                 cmd.Parameters.Add("@UserGuid", SqlDbType.UniqueIdentifier).Value = user.UserGuid;
 
                 cn.Open();
-                await cmd.ExecuteNonQueryAsync();
-                cn.Close();
+                insertedId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                //await cmd.ExecuteNonQueryAsync();
+                if(cn.State == System.Data.ConnectionState.Open) cn.Close();
             }
 
-            return true;
+            return insertedId;
         }
 
         public async Task<bool> CheckIfEmailExists(string email)
