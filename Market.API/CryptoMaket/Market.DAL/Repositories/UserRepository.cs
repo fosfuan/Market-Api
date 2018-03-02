@@ -1,6 +1,7 @@
 ﻿using Market.DAL.Queries;
 using Market.Helper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +14,12 @@ namespace Market.DAL.Repositories
     public class UserRepository : BaseRepository, IUserRepository
     {
         private readonly IConfiguration config;
+        private readonly ILogger<UserRepository> logger;
 
-        public UserRepository(IConfiguration config) : base(config.GetConnectionString("DefaultConnection"))
+        public UserRepository(IConfiguration config,
+            ILogger<UserRepository> logger) : base(config.GetConnectionString("DefaultConnection"))
         {
-
+            this.logger = logger;
         }
 
         public async Task<int> AddUserAsync(User user)
@@ -44,6 +47,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
 
@@ -76,6 +80,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
 
@@ -114,6 +119,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
 
@@ -161,6 +167,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
             return searchedUser;

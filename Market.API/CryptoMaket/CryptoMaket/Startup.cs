@@ -57,7 +57,7 @@ namespace CryptoMaket
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging")); //log levels set in your configuration
             loggerFactory.AddDebug(); //does all log levels
-            loggerFactory.AddFile(Configuration["LogFile"], LogLevel.Warning);
+            loggerFactory.AddFile(Configuration["LogFile"], LogLevel.Information);
 
             if (env.IsDevelopment())
             {

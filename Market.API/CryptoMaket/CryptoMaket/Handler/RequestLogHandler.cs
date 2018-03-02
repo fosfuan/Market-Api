@@ -28,11 +28,11 @@ namespace CryptoMaket.Handler
                 requestLogMessage += $"\n Host: {request.Host}";
                 requestLogMessage += $"\n URL: {request.Path}";
 
-                logger.LogWarning(requestLogMessage);
+                logger.LogInformation(requestLogMessage);
                 await next(context);
                 var response = context.Response;
                 var responseLogMessage = $"\nRESPONSE:\nStatus Code: {response.StatusCode}";
-                logger.LogWarning(responseLogMessage);
+                logger.LogInformation(responseLogMessage);
             }
             catch (Exception ex)
             {

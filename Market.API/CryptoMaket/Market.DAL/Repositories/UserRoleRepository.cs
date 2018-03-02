@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 using Market.DAL.Queries;
 using Market.Helper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Market.DAL.Repositories
 {
     public class UserRoleRepository : BaseRepository, IUserRoleRepository
     {
         private readonly IConfiguration config;
+        private readonly ILogger<UserRoleRepository> logger;
 
-        public UserRoleRepository(IConfiguration config) : base(config.GetConnectionString("DefaultConnection"))
+        public UserRoleRepository(IConfiguration config,
+            ILogger<UserRoleRepository> logger) : base(config.GetConnectionString("DefaultConnection"))
         {
-
+            this.logger = logger;
         }
 
 
@@ -39,6 +42,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
 
@@ -67,6 +71,7 @@ namespace Market.DAL.Repositories
             }
             catch(Exception ex)
             {
+                this.logger.LogError(ex.Message);
                 throw ex;
             }
 
