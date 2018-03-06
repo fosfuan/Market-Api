@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.Managers;
 using CryptoMaket.Models;
 using Market.DAL;
 using Market.Services.Services;
@@ -23,14 +24,17 @@ namespace CryptoMaket.Controllers
         private IConfiguration config;
         private readonly IUserService userService;
         private readonly IUserRolesService userRolesService;
+        private readonly IUserManager userManager;
 
         public TokenController(IConfiguration config,
             IUserService userService,
-            IUserRolesService userRolesService)
+            IUserRolesService userRolesService,
+            IUserManager userManager)
         {
             this.config = config;
             this.userService = userService;
             this.userRolesService = userRolesService;
+            this.userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -39,12 +43,12 @@ namespace CryptoMaket.Controllers
         public async Task<IActionResult> CreateToken([FromBody]LoginModel login)
         {
             IActionResult response = Unauthorized();
-            var user = await Authenticate(login);
+            var user = await this.userManager.Authenticate(login);
 
-            if (user.UserName != null)
+            if (user != null)
             {
-                var tokenString = await BuildToken(user);
-                response = Ok(new { token = tokenString });
+                var credential = await this.userManager.BuildToken(user);
+                response = Ok(new { credential });
             }
             else
             {
@@ -65,12 +69,12 @@ namespace CryptoMaket.Controllers
             IActionResult response = BadRequest();
             try
             {
-                if(await this.userService.CheckIfEmailExists(register.Email))
+                if(await this.userManager.ValidateEmail(register.Email))
                 {
                     return BadRequest(new { message = "Email already exists;"});
                 }
 
-                if (await this.userService.CheckIfUsernameExists(register.UserName))
+                if (await this.userManager.ValidateUserName(register.UserName))
                 {
                     return BadRequest(new { message = "UserName already exists;" });
                 }
@@ -90,41 +94,5 @@ namespace CryptoMaket.Controllers
                 return BadRequest( ex.Message );
             }
         }
-
-        private async Task<string> BuildToken(User user)
-        {
-            var userRoles = await this.userRolesService.GetUserRoles(user.Id);
-
-            var claims = new List<Claim>() {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            foreach (var userRole in userRoles)
-            {
-                claims.Add(
-                    new Claim(ClaimTypes.Role, userRole));
-            }
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.config["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(this.config["Jwt:Issuer"],
-              this.config["Jwt:Issuer"],
-              claims,
-              expires: DateTime.Now.AddMinutes(30),
-              signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private async Task<User> Authenticate(LoginModel login)
-        {
-            User user = await this.userService.GetUserByUsernameAndPassword(login.UserName, login.Password);
-            
-            return user;
-        }
-
     }
 }

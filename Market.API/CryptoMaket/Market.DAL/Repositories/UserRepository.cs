@@ -170,6 +170,8 @@ namespace Market.DAL.Repositories
                 this.logger.LogError(ex.Message);
                 throw ex;
             }
+            if (string.IsNullOrEmpty(searchedUser.UserName))
+                return null;
             return searchedUser;
         }
 

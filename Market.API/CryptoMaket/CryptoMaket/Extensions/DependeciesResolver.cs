@@ -1,4 +1,5 @@
-﻿using Market.DAL.Repositories;
+﻿using CryptoMaket.Managers;
+using Market.DAL.Repositories;
 using Market.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,11 @@ namespace CryptoMaket.Extensions
 
             services.AddTransient<IUserRolesService, UserRolesService>();
             services.AddTransient<IUserService, UserService>();
+
+            services.AddTransient<IUserRefreshTokenService, UserRefreshTokenService>();
+            services.AddTransient<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+
+            services.AddTransient<IUserManager, UserManager>();
         }
     }
 }

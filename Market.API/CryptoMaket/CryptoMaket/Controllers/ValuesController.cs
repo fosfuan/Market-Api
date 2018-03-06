@@ -12,13 +12,14 @@ namespace CryptoMaket.Controllers
     {
         // GET api/values
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
-        [Authorize]
+        [Authorize(Roles = "BasicUser")]
         [HttpGet("{id}")]
         public string Get(int id)
         {
