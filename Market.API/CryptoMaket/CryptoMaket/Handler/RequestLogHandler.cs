@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CryptoMaket.Extensions;
 using System.Text;
+using System.Diagnostics;
 
 namespace CryptoMaket.Handler
 {
@@ -23,6 +24,7 @@ namespace CryptoMaket.Handler
 
         public async Task Invoke(HttpContext context)
         {
+            var sw = Stopwatch.StartNew();
             try
             {
                 var request = context.Request;
@@ -33,27 +35,26 @@ namespace CryptoMaket.Handler
 
                 logger.LogInformation(requestLogMessage);
                 await next(context);
+                sw.Stop();
+
                 var response = context.Response;
 
                 if (response == null)
                 {
-                    logger.LogInformation($"Request {request.Path} return response nul");
+                    logger.LogInformation($"Request {request.Path} return response nul in {sw.Elapsed.TotalMilliseconds}");
                 }
                 else
                 {
 
                     if (response.IsSuccessStatusCode())
                     {
-                        this.LogResponseSuccess(response, request);
+                        this.LogResponseSuccess(response, request, sw);
                     }
                     else
                     {
-                        this.LogResponseError(response, request);
+                        this.LogResponseError(response, request, sw);
                     }
                 }
-
-                var responseLogMessage = $"\nRESPONSE:\nStatus Code: {response.StatusCode}";
-                logger.LogInformation(responseLogMessage);
             }
             catch (Exception ex)
             {
@@ -64,15 +65,15 @@ namespace CryptoMaket.Handler
             }
         }
 
-        private void LogResponseSuccess(HttpResponse response, HttpRequest request)
+        private void LogResponseSuccess(HttpResponse response, HttpRequest request, Stopwatch sw)
         {
-            logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path}");
+            logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.Elapsed.TotalMilliseconds}");
         }
 
-        private void LogResponseError(HttpResponse response, HttpRequest request)
+        private void LogResponseError(HttpResponse response, HttpRequest request, Stopwatch sw)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            this.AppendGeneralInfoError(response, request, stringBuilder);
+            this.AppendGeneralInfoError(response, request, stringBuilder, sw);
 
             if (response.StatusCode == 500)
             {
@@ -84,16 +85,9 @@ namespace CryptoMaket.Handler
             }
         }
 
-        private void AppendGeneralInfoError(HttpResponse response, HttpRequest request, StringBuilder sb)
+        private void AppendGeneralInfoError(HttpResponse response, HttpRequest request, StringBuilder sb, Stopwatch sw)
         {
-            if (response.HttpContext != null)
-            {
-                sb.Append($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path}");
-            }
-            else
-            {
-                sb.Append($"Returning {response.StatusCode} but content is null");
-            }
+            sb.Append($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.Elapsed.TotalMilliseconds}");
         }
 
     }
