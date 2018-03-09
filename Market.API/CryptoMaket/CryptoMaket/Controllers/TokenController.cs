@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NLog;
 
 namespace CryptoMaket.Controllers
 {
@@ -25,6 +27,7 @@ namespace CryptoMaket.Controllers
         private readonly IUserService userService;
         private readonly IUserRolesService userRolesService;
         private readonly IUserManager userManager;
+        private readonly Logger logger = LogManager.GetLogger("ExtendedLogging");
 
         public TokenController(IConfiguration config,
             IUserService userService,
@@ -52,6 +55,7 @@ namespace CryptoMaket.Controllers
             }
             else
             {
+                this.logger.Error("FROM ExtendedLogging Invalid username or password");
                 response = BadRequest(new { error = "Invalid UserName or Password!" });
             }
 

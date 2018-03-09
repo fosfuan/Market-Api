@@ -16,6 +16,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Nancy.TinyIoc;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace CryptoMaket
 {
@@ -55,9 +58,9 @@ namespace CryptoMaket
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging")); //log levels set in your configuration
-            loggerFactory.AddDebug(); //does all log levels
-            loggerFactory.AddFile(Configuration["LogFile"], LogLevel.Information);
+            //loggerFactory.AddConsole(Configuration.GetSection("Logging")); //log levels set in your configuration
+            //loggerFactory.AddDebug(); //does all log levels
+            //loggerFactory.AddFile(Configuration["LogFile"], LogLevel.Information);
 
             if (env.IsDevelopment())
             {
