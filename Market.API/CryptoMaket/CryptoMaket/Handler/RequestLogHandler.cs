@@ -41,7 +41,7 @@ namespace CryptoMaket.Handler
 
                 if (response == null)
                 {
-                    logger.LogInformation($"Request {request.Path} return response nul in {sw.Elapsed.TotalMilliseconds}");
+                    logger.LogInformation($"Request {request.Path} return response nul in {sw.ElapsedMilliseconds}");
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace CryptoMaket.Handler
 
         private void LogResponseSuccess(HttpResponse response, HttpRequest request, Stopwatch sw)
         {
-            logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.Elapsed.TotalMilliseconds}");
+            logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.ElapsedMilliseconds}");
         }
 
         private void LogResponseError(HttpResponse response, HttpRequest request, Stopwatch sw)
@@ -87,7 +87,7 @@ namespace CryptoMaket.Handler
 
         private void AppendGeneralInfoError(HttpResponse response, HttpRequest request, StringBuilder sb, Stopwatch sw)
         {
-            sb.Append($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.Elapsed.TotalMilliseconds}");
+            sb.Append($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path} in {sw.ElapsedMilliseconds}");
         }
 
     }

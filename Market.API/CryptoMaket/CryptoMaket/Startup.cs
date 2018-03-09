@@ -67,6 +67,7 @@ namespace CryptoMaket
                 app.UseDeveloperExceptionPage();
             }
             app.UseMiddleware<RequestLogHandler>();
+            app.UseMiddleware<ReponseLogHandler>();
             app.UseMiddleware<ExceptionResponseHandler>(); 
             app.UseAuthentication();
 
