@@ -30,18 +30,18 @@ namespace CryptoMaket.Handler
                 requestLogMessage += $"\n ContentType: {request.ContentType ?? "Not specified"}";
                 requestLogMessage += $"\n Host: {request.Host}";
                 requestLogMessage += $"\n URL: {request.Path}";
-                
+
                 logger.LogInformation(requestLogMessage);
                 await next(context);
                 var response = context.Response;
 
-                if(response == null)
+                if (response == null)
                 {
                     logger.LogInformation($"Request {request.Path} return response nul");
                 }
                 else
                 {
-                    
+
                     if (response.IsSuccessStatusCode())
                     {
                         this.LogResponseSuccess(response, request);
@@ -51,7 +51,7 @@ namespace CryptoMaket.Handler
                         this.LogResponseError(response, request);
                     }
                 }
-                
+
                 var responseLogMessage = $"\nRESPONSE:\nStatus Code: {response.StatusCode}";
                 logger.LogInformation(responseLogMessage);
             }
@@ -66,14 +66,7 @@ namespace CryptoMaket.Handler
 
         private void LogResponseSuccess(HttpResponse response, HttpRequest request)
         {
-            if(response.ContentLength != null)
-            {
-                logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path}");
-            }
-            else
-            {
-                logger.LogInformation($"Returning {response.StatusCode} but content is null");
-            }
+            logger.LogInformation($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path}");
         }
 
         private void LogResponseError(HttpResponse response, HttpRequest request)
@@ -81,7 +74,7 @@ namespace CryptoMaket.Handler
             StringBuilder stringBuilder = new StringBuilder();
             this.AppendGeneralInfoError(response, request, stringBuilder);
 
-            if(response.StatusCode == 500)
+            if (response.StatusCode == 500)
             {
                 logger.LogError(stringBuilder.ToString());
             }
@@ -93,7 +86,7 @@ namespace CryptoMaket.Handler
 
         private void AppendGeneralInfoError(HttpResponse response, HttpRequest request, StringBuilder sb)
         {
-            if(response.HttpContext != null)
+            if (response.HttpContext != null)
             {
                 sb.Append($"Returnig {response.StatusCode} for request {request.Method} on URI: {request.Path}");
             }
@@ -102,6 +95,6 @@ namespace CryptoMaket.Handler
                 sb.Append($"Returning {response.StatusCode} but content is null");
             }
         }
-        
+
     }
 }

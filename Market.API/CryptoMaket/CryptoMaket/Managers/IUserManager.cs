@@ -13,5 +13,6 @@ namespace CryptoMaket.Managers
         Task<LoginResponseData> BuildToken(User user);
         Task<bool> ValidateEmail(string email);
         Task<bool> ValidateUserName(string userName);
+        Task<LoginResponseData> RefreshToken(string refreshToken, int userId);
     }
 }

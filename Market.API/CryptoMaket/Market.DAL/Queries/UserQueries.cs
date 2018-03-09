@@ -16,6 +16,11 @@ namespace Market.DAL.Queries
             return $"SELECT * FROM [dbo].[User] WHERE UserName = @UserName";
         }
 
+        public static string SelectUserById()
+        {
+            return $"SELECT * FROM [dbo].[User] WHERE Id = @Id";
+        }
+
         public static string CountUserByEmail()
         {
             return $"SELECT COUNT(*) as NumberOfUsers FROM [dbo].[User] WHERE Email = @Email";

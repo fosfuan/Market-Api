@@ -98,5 +98,24 @@ namespace CryptoMaket.Controllers
                 return BadRequest( ex.Message );
             }
         }
+
+        [Authorize(Roles = "BasicUser")]
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenModel refreshTokenModel)
+        {
+            IActionResult result = null;
+            try
+            {
+                var newRefreshTokens = await this.userManager.RefreshToken(refreshTokenModel.RefreshToken, refreshTokenModel.UserId);
+                result = Ok(new { newRefreshTokens });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return result;
+        }
+
     }
 }

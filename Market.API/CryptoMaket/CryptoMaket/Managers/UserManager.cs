@@ -102,5 +102,19 @@ namespace CryptoMaket.Managers
 
             return false;
         }
+
+        public async Task<LoginResponseData> RefreshToken(string refreshToken, int userId)
+        {
+            var userRefreshToken = await this.userRefreshTokenService.GetRefreshTokenByUserId(userId);
+            if(!refreshToken.Equals(userRefreshToken.RefreshToken))
+            {
+                return null;
+            }
+
+            var user = await this.userService.GetUserById(userId);
+            var userNewTokens = await this.BuildToken(user);
+
+            return userNewTokens;
+        }
     }
 }

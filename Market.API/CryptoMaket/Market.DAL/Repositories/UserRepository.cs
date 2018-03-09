@@ -45,7 +45,7 @@ namespace Market.DAL.Repositories
                     if (cn.State == System.Data.ConnectionState.Open) cn.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.logger.LogError(ex.Message);
                 throw ex;
@@ -78,7 +78,7 @@ namespace Market.DAL.Repositories
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.logger.LogError(ex.Message);
                 throw ex;
@@ -117,7 +117,7 @@ namespace Market.DAL.Repositories
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.logger.LogError(ex.Message);
                 throw ex;
@@ -165,7 +165,39 @@ namespace Market.DAL.Repositories
                     con.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex.Message);
+                throw ex;
+            }
+            if (string.IsNullOrEmpty(searchedUser.UserName))
+                return null;
+            return searchedUser;
+        }
+
+        public async Task<User> GetUserById(int userId)
+        {
+            var searchedUser = new User();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(this.ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(UserQueries.SelectUserById(), con);
+                    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = userId;
+
+                    await con.OpenAsync();
+                    SqlDataReader rdr = await cmd.ExecuteReaderAsync();
+
+                    while (await rdr.ReadAsync())
+                    {
+                        searchedUser.UserName = rdr["UserName"].ToString();
+                        searchedUser.Email = rdr["Email"].ToString();
+                        searchedUser.Id = Convert.ToInt32(rdr["Id"]);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
             {
                 this.logger.LogError(ex.Message);
                 throw ex;

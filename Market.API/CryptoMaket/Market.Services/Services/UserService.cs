@@ -48,6 +48,11 @@ namespace Market.Services.Services
             return await this.userRepository.GetUserByUsernamePassword(userName, password);
         }
 
+        public async Task<User> GetUserById(int userId)
+        {
+            return await this.userRepository.GetUserById(userId);
+        }
+
         public Task<bool> UpdateUser(User user)
         {
             throw new NotImplementedException();
