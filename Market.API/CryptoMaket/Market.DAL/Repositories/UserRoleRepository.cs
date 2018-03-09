@@ -13,7 +13,6 @@ namespace Market.DAL.Repositories
 {
     public class UserRoleRepository : BaseRepository, IUserRoleRepository
     {
-        private readonly IConfiguration config;
         private readonly ILogger<UserRoleRepository> logger;
 
         public UserRoleRepository(IConfiguration config,

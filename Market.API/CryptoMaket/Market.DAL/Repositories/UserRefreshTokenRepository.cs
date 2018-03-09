@@ -12,7 +12,6 @@ namespace Market.DAL.Repositories
 {
     public class UserRefreshTokenRepository : BaseRepository, IUserRefreshTokenRepository
     {
-        private readonly IConfiguration config;
         private readonly ILogger<UserRefreshTokenRepository> logger;
 
         public UserRefreshTokenRepository(IConfiguration config,
