@@ -107,6 +107,10 @@ namespace CryptoMaket.Controllers
             try
             {
                 var newRefreshTokens = await this.userManager.RefreshToken(refreshTokenModel.RefreshToken, refreshTokenModel.UserId);
+                if(newRefreshTokens == null)
+                {
+                    return BadRequest("Inwalid Refresh Token!");
+                }
                 result = Ok(new { newRefreshTokens });
             }
             catch(Exception ex)
