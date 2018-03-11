@@ -2,20 +2,49 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as testActions from './actions/testActions.js';
+import PropTypes from 'prop-types'
+
+class App extends React.Component {
+constructor(props, context) {
+        super(props, context);
+    }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {this.props.test}
+        {this.props.categories.map((category, index) => {
+            return (
+              <div key={index}>
+                <p>{category}</p>
+              </div>
+            );
+          }            
+        )}
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+    test: PropTypes.string,
+    categories: PropTypes.array
+}
+
+function mapStateToProps(state) {
+  return {
+    test: state.tests.test,
+    categories: state.tests.categories
+  }
+}
+
+function mapispatchToProps(dispatch){
+    return{
+        actions: bindActionCreators(testActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapispatchToProps)(App);

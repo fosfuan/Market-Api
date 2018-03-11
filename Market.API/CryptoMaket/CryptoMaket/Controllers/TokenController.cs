@@ -27,7 +27,6 @@ namespace CryptoMaket.Controllers
         private readonly IUserService userService;
         private readonly IUserRolesService userRolesService;
         private readonly IUserManager userManager;
-        private readonly Logger logger = LogManager.GetLogger("ExtendedLogging");
 
         public TokenController(IConfiguration config,
             IUserService userService,
@@ -55,7 +54,6 @@ namespace CryptoMaket.Controllers
             }
             else
             {
-                this.logger.Error("FROM ExtendedLogging Invalid username or password");
                 response = BadRequest(new { error = "Invalid UserName or Password!" });
             }
 
