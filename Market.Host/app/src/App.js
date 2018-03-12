@@ -5,7 +5,8 @@ import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as testActions from './actions/testActions.js';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends React.Component {
 constructor(props, context) {
@@ -14,17 +15,19 @@ constructor(props, context) {
 
   render() {
     return (
-      <div className="App">
-        {this.props.test}
-        {this.props.categories.map((category, index) => {
-            return (
-              <div key={index}>
-                <p>{category}</p>
-              </div>
-            );
-          }            
-        )}
-      </div>
+      <MuiThemeProvider>
+          <div className="App">
+            {this.props.test}
+            {this.props.categories.map((category, index) => {
+                return (
+                  <div key={index}>
+                    <p>{category}</p>
+                  </div>
+                );
+              }            
+            )}
+          </div>
+      </MuiThemeProvider>
     );
   }
 }
