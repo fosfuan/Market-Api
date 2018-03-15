@@ -9,7 +9,12 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 import { grey900, cyan500, cyan700, grey400 } from 'material-ui/styles/colors';
+import MenuComponent from './components/menu/MenuComponent';
+import './App.css';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -25,13 +30,20 @@ class App extends React.Component {
     }
   };
 
+  const style = {
+  display: 'block',
+  margin: '16px 32px 16px 0',
+};
+
   const theme = getMuiTheme(customTheme);
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <div>
-          <AppBar title="My AppBar" />
-          <div className="container-fluid" >
+        <div className="container-fluid">
+          <div className="menu-wrapper">
+            <MenuComponent />
+          </div>
+          <div className="main-container">
             <div>{this.props.children}</div>
           </div>
         </div>
