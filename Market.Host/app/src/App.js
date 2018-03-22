@@ -22,20 +22,20 @@ class App extends React.Component {
   }
 
   render() {
-  const customTheme = {
-    palette: { 
-      primary1Color: cyan500,
-      primary2Color: cyan700,
-      primary3Color: grey400
-    }
-  };
+    const customTheme = {
+      palette: {
+        primary1Color: cyan500,
+        primary2Color: cyan700,
+        primary3Color: grey400
+      }
+    };
 
-  const style = {
-  display: 'block',
-  margin: '16px 32px 16px 0',
-};
+    const style = {
+      display: 'block',
+      margin: '16px 32px 16px 0',
+    };
 
-  const theme = getMuiTheme(customTheme);
+    const theme = getMuiTheme(customTheme);
 
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
@@ -46,6 +46,9 @@ class App extends React.Component {
           <div className="main-container">
             <div>{this.props.children}</div>
           </div>
+        </div>
+        <div className="footer">
+          <p>Footer</p>
         </div>
       </MuiThemeProvider>
     );

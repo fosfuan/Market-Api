@@ -6,7 +6,7 @@ body{
 
 .menu-wrapper{
   z-index: 1;
-  background-color:#65707a;
+  background-color:#1f2225;
   justify-content: flex-end;
 }
 
@@ -16,8 +16,9 @@ body{
   align-items: baseline;   
   margin: auto;
   height: 70px;
-  background-color: #65707a;
+  background-color: #1f2225;
   justify-content: flex-end;
+  margin: 0px 50px 20px 10px;
 }
 
 .menu-container-two{
@@ -30,7 +31,6 @@ body{
 }
 
 .menu-element{
-  background: #65707a;
   padding: 10px 15px 10px 15px;
   margin: 10px;
   width: 60px;
@@ -38,7 +38,7 @@ body{
   margin-top: 10px;
   
   line-height: 30px;
-  color:rgb(0, 151, 167);
+  color:rgb(32, 201, 219);
   font-size: 1.4em;
   font-weight: bold;
   text-align: center;
@@ -60,10 +60,15 @@ body{
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   padding: 10px 20px 10px 20px;
-  margin: 30px auto 30px auto;
+  margin: 60px auto 30px auto;
   width: 450px;
   display: flex;
   flex-flow: row wrap;
+  transition: background-color 0.7s;
+}
+
+.login-container:hover{
+  background-color: #2d343a;
 }
 
 .login-stepper{
@@ -72,4 +77,16 @@ body{
 .centered-button{
   margin-left: auto;
   margin-right: auto;
+}
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #131416;
+  color: white;
+  text-align: center;
+  min-height: 100px;
 }

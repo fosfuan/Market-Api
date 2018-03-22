@@ -98,7 +98,7 @@ class LoginPresentatonal extends React.Component {
     render() {
         const style = {
             textAlign: 'center',
-            color: 'rgb(0, 151, 167)'
+            color: 'white'
         };
 
         let fontColor = {
