@@ -76,17 +76,17 @@ class RegistrationPresentatonal extends React.Component {
         const emailError = 'Provide correct email address!';
         event.preventDefault();
         let emailValue = event.target.value;
-        this.setState({ email: emailValue });
+        this.setState({ email: emailValue }); 
+        this.setState({ email_error: emailError });
         if(emailValue.length < 1){
             this.setState({ email_error: emailError });  
             this.setState({ email: emailValue });
         }
         if (emailValue.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
             this.setState({ email: emailValue });
-            this.setState({ email_error: '', fontEmailColor: {color: 'white'}});
-            this.setState({ email: emailValue });
+            this.setState({ email_error: ''});
             this.handleNext(1);
-        } 
+        }
     }
 
     passwordOnChange = (event) => {
