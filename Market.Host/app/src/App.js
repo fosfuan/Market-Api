@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div className="container-fluid">
-          <div className="menu-wrapper">
+          <div>
             <MenuComponent />
           </div>
           <div className="main-container">

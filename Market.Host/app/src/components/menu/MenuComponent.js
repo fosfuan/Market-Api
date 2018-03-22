@@ -9,15 +9,17 @@ class MenuComponent extends React.Component {
 
     render() {
 
-        const menuItem = ["Menu", "Some", "Login"];
+        const menuItem = ["About", "Home", "Login"];
 
         return (
-            <div className="menu-container">
-                {
-                    menuItem.map((item, index) => {
-                        return <MenuItem name={item}/>;
-                    }
-                )}
+            <div  className="menu-wrapper">
+                <div className="menu-container">
+                    {
+                        menuItem.map((item, index) => {
+                            return <MenuItem name={item}/>;
+                        }
+                        )}
+                </div>
             </div>
         );
     }

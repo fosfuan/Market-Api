@@ -1,45 +1,75 @@
 body{
   margin: 0px;
+  color: white;
+  background-color: #24292e;
 }
 
 .menu-wrapper{
   z-index: 1;
-  display: flex;
-  background-color: #004D40;
+  background-color:#65707a;
+  justify-content: flex-end;
 }
 
 .menu-container{
   display: flex;
   flex-flow: row wrap;
+  align-items: baseline;   
+  margin: auto;
+  height: 70px;
+  background-color: #65707a;
+  justify-content: flex-end;
+}
+
+.menu-container-two{
+  display: flex;
+  flex-flow: row wrap;
   align-items: baseline;
-  background-color:#004D40;    
+  background-color:rgb(0, 157, 161);    
   margin: auto;
   height: 70px;
 }
 
 .menu-element{
-  background: #00695C;
-  padding: 5px;
+  background: #65707a;
+  padding: 10px 15px 10px 15px;
   margin: 10px;
   width: 60px;
   height: 30px;
   margin-top: 10px;
   
   line-height: 30px;
-  color: white;
+  color:rgb(0, 151, 167);
+  font-size: 1.4em;
   font-weight: bold;
   text-align: center;
-  font-size: 12px;
   border-radius: 10px;
   transition: background-color 0.7s;
 }
 
 .menu-element:hover{
-  background-color: #00796B;
+  background-color: #454d55;
 }
 
 .main-container{  
     margin-right: auto;
     margin-left: auto;
     max-width: 1012px;
+}
+
+.login-container{
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
+  margin: 30px auto 30px auto;
+  width: 450px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.login-stepper{
+  align-self: center;  
+}
+.centered-button{
+  margin-left: auto;
+  margin-right: auto;
 }
