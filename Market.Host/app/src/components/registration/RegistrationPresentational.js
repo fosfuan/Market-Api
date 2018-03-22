@@ -29,6 +29,8 @@ class RegistrationPresentatonal extends React.Component {
         this.emailOnChange = this.emailOnChange.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.passwordOnChange = this.passwordOnChange.bind(this);
+        this.usernameOnChange = this.usernameOnChange.bind(this);
+        this.repeatPasswordOnChange = this.repeatPasswordOnChange.bind(this);
     }
 
     state = {
@@ -56,10 +58,25 @@ class RegistrationPresentatonal extends React.Component {
         }
     };
 
+    usernameOnChange = (event) =>{
+        event.preventDefault();      
+        let usernameValue = event.target.value;
+        this.setState({ username: usernameValue });  
+        if(usernameValue.length < 7){
+            this.setState({ username_error: 'Username must be longer than 7 characters!' });
+        }else if(!/[A-Z]/.test(usernameValue)){
+            this.setState({ username_error: 'Username must have at least one upper case letter!' });
+        }else{
+            this.setState({ username_error: '' });
+            this.handleNext(0);
+        }
+    }
+
     emailOnChange = (event) => {
         const emailError = 'Provide correct email address!';
         event.preventDefault();
         let emailValue = event.target.value;
+        this.setState({ email: emailValue });
         if(emailValue.length < 1){
             this.setState({ email_error: emailError });  
             this.setState({ email: emailValue });
@@ -67,51 +84,61 @@ class RegistrationPresentatonal extends React.Component {
         if (emailValue.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
             this.setState({ email: emailValue });
             this.setState({ email_error: '', fontEmailColor: {color: 'white'}});
-            this.handleNext(1);
-        } else {
             this.setState({ email: emailValue });
-            this.setState({ email_error: emailError });
-            this.handlePrev();
-        }
+            this.handleNext(1);
+        } 
     }
 
     passwordOnChange = (event) => {
+        const format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         event.preventDefault();
         let passwordValue = event.target.value;
         this.setState({ password: passwordValue });
-        if (passwordValue.length < 1) {
-            const passwordError = 'Provide Password!';
+        if (passwordValue.length < 6) {
+            const passwordError = 'Password must have at least 6 characters!';
             this.setState({ password: passwordValue });
             this.setState({ password_error: passwordError });
-            this.handlePrev();
+        }else if(!/[A-Z]/.test(passwordValue)){
+            const passwordError = 'Password must have at least 1 upper case character!';
+            this.setState({ password_error: passwordError });
+        }
+        else if(!format.test(passwordValue)){
+            const passwordError = 'Password must have at least 1 special character!';
+            this.setState({ password_error: passwordError });
         }
         else if (passwordValue.length > 0) {
             this.setState({ password_error: '' });
             this.setState({ password: passwordValue, fontPasswordColor: {color: 'white'}});
-            this.handleNext(1);
+            this.setState({ password: passwordValue });
+            this.handleNext(2);
         }
     }
 
-    usernameOnChange = (event) =>{
+    repeatPasswordOnChange = (event) =>{
         event.preventDefault();
-        this.setState({ username: usernameValue });        
-        let usernameValue = event.target.value;
-        if(usernameValue.length < 7){
-            this.setState({ username_error: 'Username must be longer than 7 signs!' });
-        }else if(!/[A-Z]/.test(usernameValue)){
-            this.setState({ username_error: 'Username must have at least one upper case letter!' });
-        }else{
-            this.setState({ username_error: '' });
-            this.handleNext(0);
+        let repeatedPasswordValue = event.target.value;
+        this.setState({ repeat_password: repeatedPasswordValue });
+        if(this.state.password.length < 1){
+            this.handlePrev();
+            this.setState({ password_error: 'Provide password!' });
         }
-
+        
+        if(repeatedPasswordValue === this.state.password){
+            this.setState({ repeat_password_error: '' });
+            this.setState({ repeat_password: repeatedPasswordValue });
+            this.handleNext(3);
+        }else{
+            this.setState({ repeat_password: 'Password must be equal!' }); 
+            this.setState({ repeat_password: repeatedPasswordValue });           
+        }
+        this.setState({ repeat_password: repeatedPasswordValue });
     }
 
     handleNext = () => {
         const { stepIndex } = this.state;
         this.setState({
             stepIndex: stepIndex + 1,
-            finished: stepIndex >= 4,
+            finished: stepIndex >= 3,
         });
     };
 
@@ -198,7 +225,7 @@ class RegistrationPresentatonal extends React.Component {
                 </div>
                     {finished && (
                         <div className="menu-element centered-button" >
-                            <div>Login</div>
+                            <div>Register</div>
                         </div>)}
             </div>
         );
