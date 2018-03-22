@@ -9,7 +9,7 @@ class MenuComponent extends React.Component {
 
     render() {
 
-        const menuItem = ["About", "Home", "Login"];
+        const menuItem = ["About", "Home", "Login", "Register"];
 
         return (
             <div  className="menu-wrapper">

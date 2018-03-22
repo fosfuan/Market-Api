@@ -22,7 +22,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
-class LoginPresentatonal extends React.Component {
+class RegistrationPresentatonal extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -34,14 +34,24 @@ class LoginPresentatonal extends React.Component {
     state = {
         finished: false,
         stepIndex: 0,
+        username: '',
+        username_error: '',
         password: '',
         password_error: '',
         email: '',
         email_error: '',
+        repeat_password: '',
+        repeat_password_error: '',
         fontEmailColor : {
             color: 'rgba(255, 255, 255, 0.3)'
         },
         fontPasswordColor : {
+            color: 'rgba(255, 255, 255, 0.3)'
+        },
+        fontRepeatPasswordColor : {
+            color: 'rgba(255, 255, 255, 0.3)'
+        },
+        fontUsernameColor : {
             color: 'rgba(255, 255, 255, 0.3)'
         }
     };
@@ -57,7 +67,7 @@ class LoginPresentatonal extends React.Component {
         if (emailValue.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
             this.setState({ email: emailValue });
             this.setState({ email_error: '', fontEmailColor: {color: 'white'}});
-            this.handleNext(0);
+            this.handleNext(1);
         } else {
             this.setState({ email: emailValue });
             this.setState({ email_error: emailError });
@@ -82,11 +92,26 @@ class LoginPresentatonal extends React.Component {
         }
     }
 
+    usernameOnChange = (event) =>{
+        event.preventDefault();
+        this.setState({ username: usernameValue });        
+        let usernameValue = event.target.value;
+        if(usernameValue.length < 7){
+            this.setState({ username_error: 'Username must be longer than 7 signs!' });
+        }else if(!/[A-Z]/.test(usernameValue)){
+            this.setState({ username_error: 'Username must have at least one upper case letter!' });
+        }else{
+            this.setState({ username_error: '' });
+            this.handleNext(0);
+        }
+
+    }
+
     handleNext = () => {
         const { stepIndex } = this.state;
         this.setState({
             stepIndex: stepIndex + 1,
-            finished: stepIndex >= 2,
+            finished: stepIndex >= 4,
         });
     };
 
@@ -109,7 +134,13 @@ class LoginPresentatonal extends React.Component {
         return (
             <div className="login-container">
                 <div className="login-element" >
-                    <h2 style={style}>Login</h2>
+                    <h2 style={style}>Registration</h2>
+                    <TextField
+                        floatingLabelText="Username"
+                        onChange={this.usernameOnChange}
+                        value={this.state.username}
+                        errorText={this.state.username_error}
+                    /><br />
                     <TextField
                         floatingLabelText="Email"
                         onChange={this.emailOnChange}
@@ -123,10 +154,25 @@ class LoginPresentatonal extends React.Component {
                         value={this.state.password}
                         errorText={this.state.password_error}
                     /><br />
+                    <TextField
+                        floatingLabelText="Repeat Password"
+                        type="password"
+                        onChange={this.repeatPasswordOnChange}
+                        value={this.state.repeat_password}
+                        errorText={this.state.repeat_password_error}
+                    /><br />
                 </div>
                 <div className="login-element login-stepper">
                     <div style={{ maxWidth: 180, maxHeight: 400, margin: 'auto' }}>
                         <Stepper activeStep={stepIndex} orientation="vertical">
+                            <Step>
+                                <StepLabel style={this.state.fontEmailColor}>Username</StepLabel>
+                                <StepContent>
+                                    <p>
+                                        Provide an Username
+                                    </p>
+                                </StepContent>
+                            </Step>
                             <Step>
                                 <StepLabel style={this.state.fontEmailColor}>Email</StepLabel>
                                 <StepContent>
@@ -141,20 +187,13 @@ class LoginPresentatonal extends React.Component {
                                     <p>Provide a password.</p>
                                 </StepContent>
                             </Step>
+                            <Step>
+                                <StepLabel style={this.state.fontPasswordColor}>Repeat Password</StepLabel>
+                                <StepContent>
+                                    <p>You have to repeat password which you provided.</p>
+                                </StepContent>
+                            </Step>
                         </Stepper>
-                        {/* {finished && (
-                            <p style={{ margin: '20px 0', textAlign: 'center' }}>
-                                <a
-                                    href="#"
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        this.setState({ stepIndex: 0, finished: false, password: '', email: ''});
-                                    }}
-                                >
-                                    Click here
-                            </a> to reset credentials.
-                        </p>
-                        )} */}
                     </div>
                 </div>
                     {finished && (
@@ -167,4 +206,4 @@ class LoginPresentatonal extends React.Component {
 }
 
 
-export default LoginPresentatonal;
+export default RegistrationPresentatonal;

@@ -13,7 +13,7 @@ class MenuItem extends React.Component {
 
     redirectToHomeIfPageNotInItems(){
         let itemName = this.props.name;
-        const items =  ["About", "Login"];
+        const items =  ["About", "Login", "Register"];
         if(items.indexOf(itemName) > -1){            
             browserHistory.push(this.props.name.toLowerCase());
         }
