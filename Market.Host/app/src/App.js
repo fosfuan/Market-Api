@@ -37,8 +37,8 @@ class App extends React.Component {
 
     const theme = getMuiTheme(customTheme);
 
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+      return (
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div className="container-fluid">
           <div>
             <MenuComponent />

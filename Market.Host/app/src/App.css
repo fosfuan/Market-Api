@@ -79,6 +79,25 @@ body{
   margin-right: auto;
 }
 
+.register-container{
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px 20px 10px 20px;
+  margin: 60px auto 30px auto;
+  width: 450px;
+  display: flex;
+  flex-flow: row wrap;
+  transition: background-color 0.7s;
+}
+
+.register-container:hover{
+  background-color: #2d343a;
+}
+
+.register-stepper{
+  align-self: center;  
+  padding-top: 6em;
+}
 
 .footer {
   position: fixed;
