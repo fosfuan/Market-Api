@@ -44,6 +44,10 @@ namespace CryptoMaket.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> CreateToken([FromBody]LoginModel login)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             IActionResult response = Unauthorized();
             var user = await this.userManager.Authenticate(login);
 
