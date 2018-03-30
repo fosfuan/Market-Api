@@ -20,15 +20,15 @@ using NLog;
 namespace CryptoMaket.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Token")]
-    public class TokenController : Controller
+    [Route("api/User")]
+    public class UserController : Controller
     {
         private IConfiguration config;
         private readonly IUserService userService;
         private readonly IUserRolesService userRolesService;
         private readonly IUserManager userManager;
 
-        public TokenController(IConfiguration config,
+        public UserController(IConfiguration config,
             IUserService userService,
             IUserRolesService userRolesService,
             IUserManager userManager)
