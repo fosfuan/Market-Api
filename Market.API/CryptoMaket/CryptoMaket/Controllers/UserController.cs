@@ -20,7 +20,7 @@ using NLog;
 namespace CryptoMaket.Controllers
 {
     [Produces("application/json")]
-    [Route("api/User")]
+    [Route("api/user")]
     public class UserController : Controller
     {
         private IConfiguration config;
@@ -58,7 +58,7 @@ namespace CryptoMaket.Controllers
             }
             else
             {
-                response = BadRequest(new { error = "Invalid UserName or Password!" });
+                response = BadRequest("Invalid UserName or Password!");
             }
 
             return response;

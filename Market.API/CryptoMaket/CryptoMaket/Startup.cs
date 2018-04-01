@@ -37,6 +37,8 @@ namespace CryptoMaket
         public void ConfigureServices(IServiceCollection services)
         {
             DependeciesResolver.Resolve(services, Configuration);
+            
+            services.AddCors();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            .AddJwtBearer(options =>
@@ -61,11 +63,17 @@ namespace CryptoMaket
             //loggerFactory.AddConsole(Configuration.GetSection("Logging")); //log levels set in your configuration
             //loggerFactory.AddDebug(); //does all log levels
             //loggerFactory.AddFile(Configuration["LogFile"], LogLevel.Information);
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseMiddleware<RequestLogHandler>();
             app.UseMiddleware<ReponseLogHandler>();
             app.UseMiddleware<ExceptionResponseHandler>(); 
@@ -75,3 +83,5 @@ namespace CryptoMaket
         }
     }
 }
+
+
