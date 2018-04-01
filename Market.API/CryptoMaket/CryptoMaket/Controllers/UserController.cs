@@ -48,7 +48,7 @@ namespace CryptoMaket.Controllers
             {
                 return BadRequest(ModelState);
             }
-            IActionResult response = Unauthorized();
+            IActionResult response = BadRequest();
             var user = await this.userManager.Authenticate(login);
 
             if (user != null)
@@ -91,6 +91,7 @@ namespace CryptoMaket.Controllers
                     Password = register.Password,
                     UserName = register.UserName
                 };
+
                 await this.userService.AddUserAsync(newUser);
                 response = Ok(new { message = "User registerd!" });
                 return response;
