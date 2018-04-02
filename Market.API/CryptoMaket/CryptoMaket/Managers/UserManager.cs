@@ -64,7 +64,7 @@ namespace CryptoMaket.Managers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(this.config["Jwt:Issuer"],
-              this.config["Jwt:Issuer"],
+              this.config["Jwt:Audience"],
               claims,
               expires: DateTime.Now.AddMinutes(10),
               signingCredentials: creds);

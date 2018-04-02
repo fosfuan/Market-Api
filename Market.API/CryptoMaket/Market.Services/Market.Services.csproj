@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Market.DAL\Market.DAL.csproj" />
+    <ProjectReference Include="..\Market.Helper\Market.Helper.csproj" />
   </ItemGroup>
 
 </Project>
