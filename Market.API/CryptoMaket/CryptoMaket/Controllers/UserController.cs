@@ -54,7 +54,7 @@ namespace CryptoMaket.Controllers
             if (user != null)
             {
                 var credential = await this.userManager.BuildToken(user);
-                response = Ok(new { credential });
+                response = Ok(credential);
             }
             else
             {
@@ -77,12 +77,12 @@ namespace CryptoMaket.Controllers
             {
                 if(await this.userManager.ValidateEmail(register.Email))
                 {
-                    return BadRequest(new { message = "Email already exists;"});
+                    return BadRequest( "Email already exists");
                 }
 
                 if (await this.userManager.ValidateUserName(register.UserName))
                 {
-                    return BadRequest(new { message = "UserName already exists;" });
+                    return BadRequest( "UserName already exists" );
                 }
 
                 User newUser = new User()
@@ -93,7 +93,7 @@ namespace CryptoMaket.Controllers
                 };
 
                 await this.userService.AddUserAsync(newUser);
-                response = Ok(new { message = "User registerd!" });
+                response = Ok("User registerd!" );
                 return response;
             }
             catch (Exception ex)
@@ -114,11 +114,11 @@ namespace CryptoMaket.Controllers
                 {
                     return BadRequest("Inwalid Refresh Token!");
                 }
-                result = Ok(new { newRefreshTokens });
+                result = Ok(newRefreshTokens);
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest( ex.Message );
             }
 
             return result;
