@@ -40,7 +40,6 @@ namespace CryptoMaket.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
         [HttpPost("login")]
         public async Task<IActionResult> CreateToken([FromBody]LoginModel login)
         {

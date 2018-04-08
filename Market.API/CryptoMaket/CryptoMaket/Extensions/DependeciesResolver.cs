@@ -25,6 +25,9 @@ namespace CryptoMaket.Extensions
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserRoleRepository, UserRoleRepository>();
 
+            services.AddTransient<ICoinsRepository, CoinsRepository>();
+            services.AddTransient<ICoinService, CoinService>();
+
             services.AddTransient<IUserRolesService, UserRolesService>();
             services.AddTransient<IUserService, UserService>();
 
