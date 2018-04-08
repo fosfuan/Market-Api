@@ -32,7 +32,7 @@ namespace CryptoMaket.Handler
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+        private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             var code = HttpStatusCode.InternalServerError;
             var response = context.Response;
@@ -60,6 +60,8 @@ namespace CryptoMaket.Handler
             var result = JsonConvert.SerializeObject(new { error = ex.Message });
             response.ContentType = "application/json";
             response.StatusCode = (int)code;
+
+            logger.LogError(ex, ex.Message);
             return response.WriteAsync(result);
         }
     }
