@@ -31,7 +31,7 @@ namespace CryptoMaket.Controllers
             {
                 return BadRequest(ModelState);
             }
-            ValidateTake(ref skipTake);
+            ValidateTake(ref skipTake, 10);
             try
             {
                 var getLatestCoinsValue = await this.coinService.TakeAndSkipLatestCoinsValue(skipTake.Skip, skipTake.Take);
@@ -44,10 +44,10 @@ namespace CryptoMaket.Controllers
             }
         }
 
-        private void ValidateTake(ref SkipTakeModel model)
+        private void ValidateTake(ref SkipTakeModel model, int howManyTake)
         {
             if (model.Take == 0)
-                model.Take = 10;
+                model.Take = howManyTake;
         }
 
 
