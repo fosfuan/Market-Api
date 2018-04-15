@@ -25,7 +25,7 @@ namespace CryptoMaket.Controllers
 
         [AllowAnonymous]
         [HttpPost("latest/values")]
-        public async Task<IActionResult> CreateToken([FromBody]SkipTakeModel skipTake)
+        public async Task<IActionResult> GetLastCoinsValues([FromBody]SkipTakeModel skipTake)
         {
             if (!ModelState.IsValid)
             {
