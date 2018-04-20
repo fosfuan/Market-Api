@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFMarket.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,18 @@ namespace CryptoMaket.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private IUnitOfWork unitOfWork;
+        public ValuesController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
         // GET api/values
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IEnumerable<string> Get()
+        //[Authorize(Roles = "Admin")]
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = this.unitOfWork.UserRepository.GetUserById(9);
+            return users.UserName;
         }
 
         // GET api/values/5

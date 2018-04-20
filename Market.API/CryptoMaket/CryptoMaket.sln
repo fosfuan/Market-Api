@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoMaket", "CryptoMaket\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.DAL", "Market.DAL\Market.DAL.csproj", "{EFDD3371-898E-4CCA-9C4D-B5F6B6313309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Services", "Market.Services\Market.Services.csproj", "{D570525A-EE91-4468-A2EF-45FCE8641440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Services", "Market.Services\Market.Services.csproj", "{D570525A-EE91-4468-A2EF-45FCE8641440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Helper", "Market.Helper\Market.Helper.csproj", "{08C15945-66B8-4DF6-8CEF-5D09375949B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Market.Helper", "Market.Helper\Market.Helper.csproj", "{08C15945-66B8-4DF6-8CEF-5D09375949B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFMarket.DAL", "EFMarket.DAL\EFMarket.DAL.csproj", "{6C368FE4-2733-4A49-8E83-B76FC9AE0F25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08C15945-66B8-4DF6-8CEF-5D09375949B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C368FE4-2733-4A49-8E83-B76FC9AE0F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C368FE4-2733-4A49-8E83-B76FC9AE0F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C368FE4-2733-4A49-8E83-B76FC9AE0F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C368FE4-2733-4A49-8E83-B76FC9AE0F25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

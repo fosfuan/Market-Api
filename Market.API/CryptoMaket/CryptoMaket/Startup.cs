@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
 using CryptoMaket.Extensions;
 using CryptoMaket.Handler;
+using EFMarket.DAL;
+using EFMarket.DAL.UnitOfWork;
 using Market.DAL.Repositories;
 using Market.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -56,6 +60,8 @@ namespace CryptoMaket
                };
            });
             services.AddMvc();
+            services.AddDbContext<CryptoMarketContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

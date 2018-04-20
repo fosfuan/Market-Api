@@ -17,6 +17,5 @@ namespace Market.DAL
         public decimal Change_24H { get; set; }
         public decimal Change_1W { get; set; }
         public DateTime Updated_Time { get; set; }
-
     }
 }
