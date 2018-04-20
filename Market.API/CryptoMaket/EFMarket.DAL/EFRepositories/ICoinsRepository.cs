@@ -1,13 +1,12 @@
-﻿using CryptoMaket.EFMarket_DAL.Models.DB;
-using Market.DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
 
-namespace Market.Services.Services
+namespace EFMarket.DAL.EFRepositories
 {
-    public interface ICoinService
+    public interface ICoinsRepository
     {
         IList<CryptoCoinsHistory> TakeAndSkipLatestCoinsValue(int skip, int take);
     }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
+using EFMarket.DAL;
 using Market.DAL;
 using Market.DAL.Repositories;
 
@@ -9,17 +11,15 @@ namespace Market.Services.Services
 {
     public class CoinService : ICoinService
     {
-        private readonly ICoinsRepository coinsRepository;
+        private IUnitOfWork unitOfWork;
 
-        public CoinService(ICoinsRepository coinsRepository)
+        public CoinService(IUnitOfWork unitOfWork)
         {
-            this.coinsRepository = coinsRepository;
+            this.unitOfWork = unitOfWork;
         }
-        public async Task<IList<CryptoCoinsHistory>> TakeAndSkipLatestCoinsValue(int skip, int take)
+        public IList<CryptoCoinsHistory> TakeAndSkipLatestCoinsValue(int skip, int take)
         {
-            var latestCoinsValue = await this.coinsRepository.TakeAndSkipLatestCoinsValue(skip, take);
-
-            return latestCoinsValue;
+            return this.unitOfWork.CoinsRepository.TakeAndSkipLatestCoinsValue(skip, take);
         }
     }
 }

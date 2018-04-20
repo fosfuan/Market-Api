@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
 using EFMarket.DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,10 @@ namespace CryptoMaket.Controllers
         // GET api/values
         [HttpGet]
         //[Authorize(Roles = "Admin")]
-        public async Task<string> Get()
+        public IList<CryptoCoinsHistory> Get()
         {
-            var userRoles = await this.unitOfWork.UserRoleRepository.GetUserRoles(9);
-
-            var users = this.unitOfWork.UserRepository.GetUserById(9);
-            return users.UserName;
+            var lastMaxValues = this.unitOfWork.CoinsRepository.TakeAndSkipLatestCoinsValue(0, 10);
+            return lastMaxValues;
         }
 
         // GET api/values/5
