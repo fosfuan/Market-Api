@@ -1,4 +1,5 @@
-﻿using Market.DAL.Repositories;
+﻿using EFMarket.DAL;
+using Market.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,21 +9,21 @@ namespace Market.Services.Services
 {
     public class UserRolesService : IUserRolesService
     {
-        private readonly IUserRoleRepository userRoleRepository;
+        private IUnitOfWork unitOfWork;
 
-        public UserRolesService(IUserRoleRepository userRoleRepository)
+        public UserRolesService(IUnitOfWork unitOfWork)
         {
-            this.userRoleRepository = userRoleRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<bool> AddUserRole(int userId, string role)
         {
-            return await this.userRoleRepository.AddUserRole(userId, role);
+            return await this.unitOfWork.UserRoleRepository.AddUserRole(userId, role);
         }
 
         public async Task<List<string>> GetUserRoles(int userId)
         {
-            return await this.userRoleRepository.GetUserRoles(userId);
+            return await this.unitOfWork.UserRoleRepository.GetUserRoles(userId);
         }
     }
 }

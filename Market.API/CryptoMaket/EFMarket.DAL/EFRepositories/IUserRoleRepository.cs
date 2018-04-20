@@ -1,10 +1,9 @@
-﻿using Market.Helper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Market.DAL.Repositories
+namespace EFMarket.DAL.EFRepositories
 {
     public interface IUserRoleRepository
     {

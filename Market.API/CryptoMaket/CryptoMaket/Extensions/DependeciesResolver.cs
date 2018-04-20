@@ -23,7 +23,7 @@ namespace CryptoMaket.Extensions
         public static void Resolve(IServiceCollection services, IConfiguration configration)
         {
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
+            //services.AddTransient<IUserRoleRepository, UserRoleRepository>();
 
             services.AddTransient<ICoinsRepository, CoinsRepository>();
             services.AddTransient<ICoinService, CoinService>();

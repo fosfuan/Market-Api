@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EFMarket.DAL\EFMarket.DAL.csproj" />
     <ProjectReference Include="..\Market.DAL\Market.DAL.csproj" />
     <ProjectReference Include="..\Market.Helper\Market.Helper.csproj" />
   </ItemGroup>

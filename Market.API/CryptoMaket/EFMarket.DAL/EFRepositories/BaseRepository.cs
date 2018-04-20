@@ -31,9 +31,9 @@ namespace EFMarket.DAL.EFRepositories
             return entities;
         }
 
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
         }
 
         public void Update(T entity)

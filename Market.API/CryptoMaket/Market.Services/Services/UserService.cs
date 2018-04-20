@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using EFMarket.DAL;
 using Market.DAL;
 using Market.DAL.Repositories;
 using Market.Helper;
@@ -11,19 +12,19 @@ namespace Market.Services.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
-        private readonly IUserRoleRepository userRoleRepository;
+        private IUnitOfWork unitOfWork;
 
         public UserService(IUserRepository userRepository,
-            IUserRoleRepository userRoleRepository)
+            IUnitOfWork unitOfWork)
         {
-            this.userRoleRepository = userRoleRepository;
+            this.unitOfWork = unitOfWork;
             this.userRepository = userRepository;
         }
 
         public async Task<bool> AddUserAsync(User user)
         {
             var insertedUserId =  await this.userRepository.AddUserAsync(user);
-            var isRoleAssignedToNewUser = await this.userRoleRepository.AddUserRole(insertedUserId, RoleType.BasicUser);
+            var isRoleAssignedToNewUser = await this.unitOfWork.UserRoleRepository.AddUserRole(insertedUserId, RoleType.BasicUser);
 
             return isRoleAssignedToNewUser;
         }

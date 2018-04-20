@@ -12,6 +12,9 @@ namespace EFMarket.DAL.UnitOfWork
     {
         private CryptoMarketContext Context;
         private EFUserRepository userRepo;
+        private IUserRoleRepository userRoleRepository;
+
+        public IUserRoleRepository UserRoleRepository => userRoleRepository = userRoleRepository ?? new UserRoleRepository(this.Context);
 
         public EFUserRepository UserRepository => userRepo = userRepo ?? new EFUserRepository(this.Context);
 

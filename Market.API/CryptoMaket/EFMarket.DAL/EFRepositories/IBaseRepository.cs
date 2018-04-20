@@ -9,7 +9,7 @@ namespace EFMarket.DAL.EFRepositories
     {
         T Get(Func<T, bool> predicate);
         Task<IEnumerable<T>> GetAllAsync();
-        void Create(T entity);
+        Task CreateAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

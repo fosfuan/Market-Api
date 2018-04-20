@@ -19,8 +19,10 @@ namespace CryptoMaket.Controllers
         // GET api/values
         [HttpGet]
         //[Authorize(Roles = "Admin")]
-        public string Get()
+        public async Task<string> Get()
         {
+            var userRoles = await this.unitOfWork.UserRoleRepository.GetUserRoles(9);
+
             var users = this.unitOfWork.UserRepository.GetUserById(9);
             return users.UserName;
         }
