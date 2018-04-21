@@ -12,6 +12,7 @@ namespace EFMarket.DAL
         IUserRoleRepository UserRoleRepository { get; }
         ICoinsRepository CoinsRepository { get; }
         IUserRepository UserRepository { get; }
+        IUserRefreshTokenRepository UserRefreshTokenRepository { get; }
         void Save();
 
         Task SaveAsync();

@@ -14,12 +14,13 @@ namespace EFMarket.DAL.UnitOfWork
         private IUserRepository userRepository;
         private IUserRoleRepository userRoleRepository;
         private ICoinsRepository coinsRepository;
+        private IUserRefreshTokenRepository userRefreshTokenRepository;
 
 
         public IUserRoleRepository UserRoleRepository => userRoleRepository = userRoleRepository ?? new UserRoleRepository(this.Context);
         public ICoinsRepository CoinsRepository => coinsRepository = coinsRepository ?? new CoinsRepository(this.Context);
         public IUserRepository UserRepository => userRepository = userRepository ?? new UserRepository(this.Context);
-
+        public IUserRefreshTokenRepository UserRefreshTokenRepository => userRefreshTokenRepository = userRefreshTokenRepository ?? new UserRefreshTokenRepository(this.Context);
         //private IUserRepository userRepository;
 
         // public IUserRepository UserRepository => userRepository = userRepository ?? new UserRepository(this.Context);

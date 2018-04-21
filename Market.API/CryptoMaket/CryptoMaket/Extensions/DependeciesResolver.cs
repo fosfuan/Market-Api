@@ -32,7 +32,7 @@ namespace CryptoMaket.Extensions
             services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<IUserRefreshTokenService, UserRefreshTokenService>();
-            services.AddTransient<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+            //services.AddTransient<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
 
             services.AddTransient<IUserManager, UserManager>();
         }
