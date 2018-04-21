@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
 using EFMarket.DAL;
 using EFMarket.DAL.EFRepositories;
 using Market.DAL;
@@ -14,11 +15,11 @@ namespace Market.Services.Services
     {
         private readonly IUserRepository userRepository;
         private readonly IUserRoleRepository userRoleRepository;
+        
 
-        public UserService(IUserRepository userRepository,
-            IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
+            this.userRepository = unitOfWork.UserRepository;
             this.userRoleRepository = unitOfWork.UserRoleRepository;
         }
 
@@ -40,9 +41,9 @@ namespace Market.Services.Services
             return await this.userRepository.CheckIfUsernameExists(username);
         }
 
-        public Task<bool> DeleteUser(User user)
+        public async Task DeleteUser(User user)
         {
-            throw new NotImplementedException();
+            await this.userRepository.DeleteUser(user);
         }
 
         public async Task<User> GetUserByUsernameAndPassword(string userName, string password)
@@ -55,9 +56,9 @@ namespace Market.Services.Services
             return await this.userRepository.GetUserById(userId);
         }
 
-        public Task<bool> UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            await this.userRepository.UpdateUser(user);
         }
     }
 }

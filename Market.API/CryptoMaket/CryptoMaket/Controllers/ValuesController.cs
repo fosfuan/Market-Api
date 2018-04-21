@@ -19,10 +19,10 @@ namespace CryptoMaket.Controllers
         }
         // GET api/values
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
-        public IList<CryptoCoinsHistory> Get()
+        [Authorize(Roles = "Admin")]
+        public async Task<IList<CryptoCoinsHistory>> Get()
         {
-            var lastMaxValues = this.unitOfWork.CoinsRepository.TakeAndSkipLatestCoinsValue(0, 10);
+            var lastMaxValues = await this.unitOfWork.CoinsRepository.TakeAndSkipLatestCoinsValue(0, 10);
             return lastMaxValues;
         }
 

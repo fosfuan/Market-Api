@@ -11,13 +11,14 @@ namespace EFMarket.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private CryptoMarketContext Context;
-        private EFUserRepository userRepo;
+        private IUserRepository userRepository;
         private IUserRoleRepository userRoleRepository;
         private ICoinsRepository coinsRepository;
 
+
         public IUserRoleRepository UserRoleRepository => userRoleRepository = userRoleRepository ?? new UserRoleRepository(this.Context);
         public ICoinsRepository CoinsRepository => coinsRepository = coinsRepository ?? new CoinsRepository(this.Context);
-        public EFUserRepository UserRepository => userRepo = userRepo ?? new EFUserRepository(this.Context);
+        public IUserRepository UserRepository => userRepository = userRepository ?? new UserRepository(this.Context);
 
         //private IUserRepository userRepository;
 

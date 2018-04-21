@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CryptoMaket.EFMarket_DAL.Models.DB;
 using CryptoMaket.Managers;
 using CryptoMaket.Models;
 using Market.DAL;

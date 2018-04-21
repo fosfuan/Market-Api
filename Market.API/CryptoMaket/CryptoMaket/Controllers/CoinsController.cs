@@ -25,7 +25,7 @@ namespace CryptoMaket.Controllers
 
         [AllowAnonymous]
         [HttpPost("latest/values")]
-        public IActionResult GetLastCoinsValues([FromBody]SkipTakeModel skipTake)
+        public async Task<IActionResult> GetLastCoinsValues([FromBody]SkipTakeModel skipTake)
         {
             if (!ModelState.IsValid)
             {
@@ -34,7 +34,7 @@ namespace CryptoMaket.Controllers
             ValidateTake(ref skipTake, 10);
             try
             {
-                var getLatestCoinsValue = this.coinService.TakeAndSkipLatestCoinsValue(skipTake.Skip, skipTake.Take);
+                var getLatestCoinsValue = await this.coinService.TakeAndSkipLatestCoinsValue(skipTake.Skip, skipTake.Take);
 
                 return Ok(getLatestCoinsValue);
             }

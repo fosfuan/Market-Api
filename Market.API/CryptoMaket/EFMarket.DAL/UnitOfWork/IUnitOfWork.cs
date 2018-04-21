@@ -9,10 +9,9 @@ namespace EFMarket.DAL
 {
     public interface IUnitOfWork
     {
-        EFUserRepository UserRepository { get; }
-
         IUserRoleRepository UserRoleRepository { get; }
         ICoinsRepository CoinsRepository { get; }
+        IUserRepository UserRepository { get; }
         void Save();
 
         Task SaveAsync();

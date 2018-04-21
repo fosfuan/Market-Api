@@ -18,9 +18,9 @@ namespace Market.Services.Services
         {
             this.coinRepository = unitOfWork.CoinsRepository;
         }
-        public IList<CryptoCoinsHistory> TakeAndSkipLatestCoinsValue(int skip, int take)
+        public async Task<IList<CryptoCoinsHistory>> TakeAndSkipLatestCoinsValue(int skip, int take)
         {
-            return this.coinRepository.TakeAndSkipLatestCoinsValue(skip, take);
+            return await this.coinRepository.TakeAndSkipLatestCoinsValue(skip, take);
         }
     }
 }

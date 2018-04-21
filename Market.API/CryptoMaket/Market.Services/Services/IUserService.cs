@@ -1,4 +1,5 @@
-﻿using Market.DAL;
+﻿using CryptoMaket.EFMarket_DAL.Models.DB;
+using Market.DAL;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,8 @@ namespace Market.Services.Services
     {
         Task<bool> AddUserAsync(User user);
         Task<User> GetUserByUsernameAndPassword(string userName, string password);
-        Task<bool> UpdateUser(User user);
-        Task<bool> DeleteUser(User user);
+        Task UpdateUser(User user);
+        Task DeleteUser(User user);
         Task<bool> CheckIfUsernameExists(string username);
         Task<bool> CheckIfEmailExists(string email);
         Task<User> GetUserById(int userId);

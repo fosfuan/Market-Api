@@ -1,4 +1,5 @@
-﻿using CryptoMaket.Models;
+﻿using CryptoMaket.EFMarket_DAL.Models.DB;
+using CryptoMaket.Models;
 using Market.DAL;
 using Market.Services.Services;
 using Microsoft.Extensions.Configuration;

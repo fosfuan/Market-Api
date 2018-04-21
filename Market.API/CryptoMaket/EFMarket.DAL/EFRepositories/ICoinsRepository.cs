@@ -8,6 +8,6 @@ namespace EFMarket.DAL.EFRepositories
 {
     public interface ICoinsRepository
     {
-        IList<CryptoCoinsHistory> TakeAndSkipLatestCoinsValue(int skip, int take);
+        Task<IList<CryptoCoinsHistory>> TakeAndSkipLatestCoinsValue(int skip, int take);
     }
 }
