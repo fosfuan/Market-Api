@@ -27,7 +27,7 @@ namespace CryptoMaket.Models
             if (model == null)
                 throw new ArgumentException("Attribute not applied on Employee");
 
-            if (model.Skip < 10)
+            if (model.Take < 2)
                 return new ValidationResult(GetErrorMessage(validationContext));
 
             return ValidationResult.Success;

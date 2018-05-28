@@ -44,6 +44,8 @@ namespace CryptoMaket.Controllers
             }
         }
 
+
+
         private void ValidateTake(ref SkipTakeModel model, int howManyTake)
         {
             if (model.Take == 0)

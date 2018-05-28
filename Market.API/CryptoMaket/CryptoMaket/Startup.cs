@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CryptoMaket.EFMarket_DAL.Models.DB;
 using CryptoMaket.Extensions;
+using CryptoMaket.Filter;
 using CryptoMaket.Handler;
 using EFMarket.DAL;
 using EFMarket.DAL.UnitOfWork;
@@ -60,6 +61,7 @@ namespace CryptoMaket
                };
            });
             services.AddMvc();
+            services.AddScoped<TestFilter>();
             services.AddDbContext<CryptoMarketContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
