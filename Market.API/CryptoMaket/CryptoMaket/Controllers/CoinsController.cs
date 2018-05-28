@@ -44,6 +44,24 @@ namespace CryptoMaket.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet("history/{id}")]
+        public  async Task<IActionResult> GetCoinHistory(int id)
+        {
+            try
+            {
+                var coinHistory = await this.coinService.TakeSpecificCurrencyHistory(id);
+                if(coinHistory.Count > 0)
+                    return Ok(coinHistory);
+
+                return BadRequest("Not foud item with specific id");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
 
         private void ValidateTake(ref SkipTakeModel model, int howManyTake)

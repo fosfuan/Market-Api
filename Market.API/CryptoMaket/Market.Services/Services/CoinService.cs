@@ -22,5 +22,10 @@ namespace Market.Services.Services
         {
             return await this.coinRepository.TakeAndSkipLatestCoinsValue(skip, take);
         }
+
+        public async Task<IList<CryptoCoinsHistory>> TakeSpecificCurrencyHistory(int id)
+        {
+            return await this.coinRepository.TakeSpecificCurrencyHistory(id);
+        }
     }
 }
