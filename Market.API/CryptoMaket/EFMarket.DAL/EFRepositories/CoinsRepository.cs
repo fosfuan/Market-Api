@@ -16,7 +16,7 @@ namespace EFMarket.DAL.EFRepositories
         }
         public async Task<IList<CryptoCoinsHistory>> TakeAndSkipLatestCoinsValue(int skip, int take)
         {
-            var groupedByName = this.dbSet.GroupBy(x => x.CoinId).SelectMany(a => a.Where(b => b.Id == a.Max(c => c.Id))).Skip(skip).Take(take);
+            var groupedByName = this.dbSet.GroupBy(x => x.CoinId).SelectMany(a => a.Where(b => b.Id == a.Max(c => c.Id))).OrderBy(coin => coin.CoinId).Skip(skip).Take(take);
 
             return await groupedByName.ToListAsync();
         }
