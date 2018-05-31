@@ -10,6 +10,6 @@ namespace Market.Services.Services
     public interface ICoinService
     {
         Task<IList<CryptoCoinsHistory>> TakeAndSkipLatestCoinsValue(int skip, int take);
-        Task<IList<CryptoCoinsHistory>> TakeSpecificCurrencyHistory(int id);
+        Task<IList<CryptoCoinsHistory>> TakeSpecificCurrencyHistory(string currencyName);
     }
 }

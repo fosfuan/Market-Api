@@ -21,9 +21,9 @@ namespace EFMarket.DAL.EFRepositories
             return await groupedByName.ToListAsync();
         }
 
-        public async Task<IList<CryptoCoinsHistory>> TakeSpecificCurrencyHistory(int id)
+        public async Task<IList<CryptoCoinsHistory>> TakeSpecificCurrencyHistory(string currencyName)
         {
-            var historyForSpecificCurrencySelectedById = this.dbSet.Where(coin => coin.CoinId.Equals(id)).OrderByDescending(coin => coin.UpdatedTime);
+            var historyForSpecificCurrencySelectedById = this.dbSet.Where(coin => coin.Symbol.Equals(currencyName)).OrderByDescending(coin => coin.UpdatedTime);
 
             return await historyForSpecificCurrencySelectedById.ToListAsync();
         }

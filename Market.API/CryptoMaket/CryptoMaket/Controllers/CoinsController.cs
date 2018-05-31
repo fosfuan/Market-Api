@@ -45,12 +45,12 @@ namespace CryptoMaket.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("history/{id}")]
-        public  async Task<IActionResult> GetCoinHistory(int id)
+        [HttpGet("history/{currencyName}")]
+        public  async Task<IActionResult> GetCoinHistory(string currencyName)
         {
             try
             {
-                var coinHistory = await this.coinService.TakeSpecificCurrencyHistory(id);
+                var coinHistory = await this.coinService.TakeSpecificCurrencyHistory(currencyName);
                 if(coinHistory.Count > 0)
                     return Ok(coinHistory);
 
